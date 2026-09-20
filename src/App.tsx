@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { Navigate, Route, Routes } from 'react-router'
 import Login from './paginas/Login'
 import Registro from './paginas/Registro'
@@ -6,6 +7,7 @@ import Inicio from './paginas/Inicio'
 import { borrarToken, guardarToken, obtenerToken } from './api/sesion'
 
 function App() {
+  const queryClient = useQueryClient()
   const [token, setToken] = useState<string | null>(() => obtenerToken())
 
   function alAcceder(nuevoToken: string) {
@@ -15,6 +17,7 @@ function App() {
 
   function cerrarSesion() {
     borrarToken()
+    queryClient.clear()
     setToken(null)
   }
 
