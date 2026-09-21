@@ -1,16 +1,44 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { listarTransacciones } from '../api/transacciones'
+import {
+  listarTransacciones,
+  type FiltrosTransacciones,
+} from '../api/transacciones'
 import { listarCategorias } from '../api/categorias'
 import { formatearDinero, formatearFecha } from '../utilidades/formato'
 
+type Tipo = '' | 'INGRESO' | 'GASTO'
+
+type Filtros = {
+  tipo: Tipo
+  categoriaId: string
+  desde: string
+  hasta: string
+}
+
+const FILTROS_VACIOS: Filtros = {
+  tipo: '',
+  categoriaId: '',
+  desde: '',
+  hasta: '',
+}
+
 export default function Transacciones() {
   const [pagina, setPagina] = useState(1)
+  const [filtros, setFiltros] = useState<Filtros>(FILTROS_VACIOS)
+
+  const filtrosApi: FiltrosTransacciones = {
+    tipo: filtros.tipo || undefined,
+    categoriaId: filtros.categoriaId ? Number(filtros.categoriaId) : undefined,
+    desde: filtros.desde || undefined,
+    hasta: filtros.hasta || undefined,
+  }
+  const hayFiltros = Object.values(filtros).some((valor) => valor !== '')
 
   const transacciones = useQuery({
-    queryKey: ['transacciones', { pagina }],
-    queryFn: () => listarTransacciones(pagina),
+    queryKey: ['transacciones', { pagina, ...filtrosApi }],
+    queryFn: () => listarTransacciones(pagina, filtrosApi),
     placeholderData: keepPreviousData,
   })
 
@@ -19,9 +47,29 @@ export default function Transacciones() {
     queryFn: () => listarCategorias(),
   })
 
-  const nombres = new Map(
-    (categorias.data ?? []).map((c) => [c.id, c.nombre] as const),
+  const listaCategorias = categorias.data ?? []
+  const nombres = new Map(listaCategorias.map((c) => [c.id, c.nombre] as const))
+  const categoriasVisibles = listaCategorias.filter(
+    (c) => !filtros.tipo || c.tipo === filtros.tipo,
   )
+
+  function cambiarFiltro(
+    campo: 'categoriaId' | 'desde' | 'hasta',
+    valor: string,
+  ) {
+    setFiltros((actuales) => ({ ...actuales, [campo]: valor }))
+    setPagina(1)
+  }
+
+  function cambiarTipo(tipo: Tipo) {
+    setFiltros((actuales) => ({ ...actuales, tipo, categoriaId: '' }))
+    setPagina(1)
+  }
+
+  function limpiarFiltros() {
+    setFiltros(FILTROS_VACIOS)
+    setPagina(1)
+  }
 
   const resultado = transacciones.data
 
@@ -31,16 +79,74 @@ export default function Transacciones() {
       <p>
         <Link to="/">← Volver al panel</Link>
       </p>
+
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>
+          Tipo
+          <select
+            value={filtros.tipo}
+            onChange={(e) => cambiarTipo(e.target.value as Tipo)}
+          >
+            <option value="">Todos</option>
+            <option value="INGRESO">Ingresos</option>
+            <option value="GASTO">Gastos</option>
+          </select>
+        </label>
+        <label>
+          Categoría
+          <select
+            value={filtros.categoriaId}
+            onChange={(e) => cambiarFiltro('categoriaId', e.target.value)}
+          >
+            <option value="">Todas</option>
+            {categoriasVisibles.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.nombre}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Desde
+          <input
+            type="date"
+            value={filtros.desde}
+            max={filtros.hasta || undefined}
+            onChange={(e) => cambiarFiltro('desde', e.target.value)}
+          />
+        </label>
+        <label>
+          Hasta
+          <input
+            type="date"
+            value={filtros.hasta}
+            min={filtros.desde || undefined}
+            onChange={(e) => cambiarFiltro('hasta', e.target.value)}
+          />
+        </label>
+        <button type="button" onClick={limpiarFiltros} disabled={!hayFiltros}>
+          Limpiar filtros
+        </button>
+      </form>
+
       {transacciones.isPending && <p>Cargando transacciones...</p>}
       {transacciones.error && (
         <p role="alert">{transacciones.error.message}</p>
       )}
       {resultado &&
         (resultado.datos.length === 0 ? (
-          <p>Todavía no tienes transacciones.</p>
+          <p>
+            {hayFiltros
+              ? 'No hay transacciones con esos filtros.'
+              : 'Todavía no tienes transacciones.'}
+          </p>
         ) : (
           <>
-            <table>
+            <p>
+              {resultado.total}{' '}
+              {resultado.total === 1 ? 'resultado' : 'resultados'}
+            </p>
+            <table aria-busy={transacciones.isPlaceholderData}>
               <thead>
                 <tr>
                   <th>Fecha</th>

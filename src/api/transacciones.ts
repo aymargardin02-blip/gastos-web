@@ -18,11 +18,28 @@ export type PaginaTransacciones = {
   totalPaginas: number
 }
 
-export function listarTransacciones(pagina: number, limite = 10) {
+export type FiltrosTransacciones = {
+  tipo?: 'INGRESO' | 'GASTO'
+  categoriaId?: number
+  desde?: string
+  hasta?: string
+}
+
+export function listarTransacciones(
+  pagina: number,
+  filtros: FiltrosTransacciones = {},
+  limite = 10,
+) {
   const parametros = new URLSearchParams({
     pagina: String(pagina),
     limite: String(limite),
   })
+  if (filtros.tipo) parametros.set('tipo', filtros.tipo)
+  if (filtros.categoriaId)
+    parametros.set('categoriaId', String(filtros.categoriaId))
+  if (filtros.desde) parametros.set('desde', filtros.desde)
+  if (filtros.hasta) parametros.set('hasta', filtros.hasta)
+
   return peticion<PaginaTransacciones>(
     `/transacciones?${parametros.toString()}`,
   )
