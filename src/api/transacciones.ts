@@ -25,6 +25,14 @@ export type FiltrosTransacciones = {
   hasta?: string
 }
 
+export type NuevaTransaccion = {
+  tipo: 'INGRESO' | 'GASTO'
+  monto: number
+  descripcion?: string
+  fecha: string
+  categoriaId: number
+}
+
 export function listarTransacciones(
   pagina: number,
   filtros: FiltrosTransacciones = {},
@@ -43,4 +51,28 @@ export function listarTransacciones(
   return peticion<PaginaTransacciones>(
     `/transacciones?${parametros.toString()}`,
   )
+}
+
+export function obtenerTransaccion(id: number) {
+  return peticion<Transaccion>(`/transacciones/${id}`)
+}
+
+export function crearTransaccion(datos: NuevaTransaccion) {
+  return peticion<Transaccion>('/transacciones', {
+    method: 'POST',
+    body: JSON.stringify(datos),
+  })
+}
+
+export function actualizarTransaccion(id: number, datos: NuevaTransaccion) {
+  return peticion<Transaccion>(`/transacciones/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(datos),
+  })
+}
+
+export function eliminarTransaccion(id: number) {
+  return peticion<Transaccion>(`/transacciones/${id}`, {
+    method: 'DELETE',
+  })
 }

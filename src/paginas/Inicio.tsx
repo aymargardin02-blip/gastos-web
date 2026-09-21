@@ -19,7 +19,8 @@ export default function Inicio({ alCerrarSesion }: Props) {
     <section>
       <h2>Panel</h2>
       <nav>
-        <Link to="/transacciones">Ver transacciones</Link>
+        <Link to="/transacciones">Ver transacciones</Link>{' '}
+        <Link to="/transacciones/nueva">Nueva transacción</Link>
       </nav>
       {isPending && <p>Cargando balance...</p>}
       {error && <p role="alert">{error.message}</p>}

@@ -5,6 +5,8 @@ import Login from './paginas/Login'
 import Registro from './paginas/Registro'
 import Inicio from './paginas/Inicio'
 import Transacciones from './paginas/Transacciones'
+import NuevaTransaccion from './paginas/NuevaTransaccion'
+import EditarTransaccion from './paginas/EditarTransaccion'
 import { borrarToken, guardarToken, obtenerToken } from './api/sesion'
 
 function App() {
@@ -44,6 +46,18 @@ function App() {
         <Route
           path="/transacciones"
           element={token ? <Transacciones /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/transacciones/nueva"
+          element={
+            token ? <NuevaTransaccion /> : <Navigate to="/login" replace />
+          }
+        />
+        <Route
+          path="/transacciones/:id/editar"
+          element={
+            token ? <EditarTransaccion /> : <Navigate to="/login" replace />
+          }
         />
         <Route
           path="/login"

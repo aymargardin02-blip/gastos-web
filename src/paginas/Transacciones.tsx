@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import {
+  eliminarTransaccion,
   listarTransacciones,
   type FiltrosTransacciones,
 } from '../api/transacciones'
@@ -25,6 +31,7 @@ const FILTROS_VACIOS: Filtros = {
 }
 
 export default function Transacciones() {
+  const queryClient = useQueryClient()
   const [pagina, setPagina] = useState(1)
   const [filtros, setFiltros] = useState<Filtros>(FILTROS_VACIOS)
 
@@ -46,6 +53,23 @@ export default function Transacciones() {
     queryKey: ['categorias'],
     queryFn: () => listarCategorias(),
   })
+
+  const eliminar = useMutation({
+    mutationFn: eliminarTransaccion,
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['transacciones'] }),
+        queryClient.invalidateQueries({ queryKey: ['balance'] }),
+      ]),
+  })
+
+  const resultado = transacciones.data
+
+  useEffect(() => {
+    if (resultado && resultado.datos.length === 0 && pagina > 1) {
+      setPagina(Math.max(1, resultado.totalPaginas))
+    }
+  }, [resultado, pagina])
 
   const listaCategorias = categorias.data ?? []
   const nombres = new Map(listaCategorias.map((c) => [c.id, c.nombre] as const))
@@ -71,13 +95,22 @@ export default function Transacciones() {
     setPagina(1)
   }
 
-  const resultado = transacciones.data
+  function confirmarEliminar(id: number) {
+    if (
+      window.confirm(
+        '¿Eliminar esta transacción? Esta acción no se puede deshacer.',
+      )
+    ) {
+      eliminar.mutate(id)
+    }
+  }
 
   return (
     <section>
       <h2>Transacciones</h2>
       <p>
-        <Link to="/">← Volver al panel</Link>
+        <Link to="/">← Volver al panel</Link>{' '}
+        <Link to="/transacciones/nueva">Nueva transacción</Link>
       </p>
 
       <form onSubmit={(e) => e.preventDefault()}>
@@ -133,6 +166,7 @@ export default function Transacciones() {
       {transacciones.error && (
         <p role="alert">{transacciones.error.message}</p>
       )}
+      {eliminar.error && <p role="alert">{eliminar.error.message}</p>}
       {resultado &&
         (resultado.datos.length === 0 ? (
           <p>
@@ -154,6 +188,7 @@ export default function Transacciones() {
                   <th>Categoría</th>
                   <th>Descripción</th>
                   <th>Monto</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,6 +199,16 @@ export default function Transacciones() {
                     <td>{nombres.get(t.categoriaId) ?? '—'}</td>
                     <td>{t.descripcion ?? ''}</td>
                     <td>{formatearDinero(t.monto)}</td>
+                    <td>
+                      <Link to={`/transacciones/${t.id}/editar`}>Editar</Link>{' '}
+                      <button
+                        type="button"
+                        onClick={() => confirmarEliminar(t.id)}
+                        disabled={eliminar.isPending}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
