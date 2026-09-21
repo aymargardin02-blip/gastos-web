@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
+import { Link } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
-import { ErrorApi } from '../api/cliente'
 import { obtenerBalance } from '../api/balance'
 import { formatearDinero } from '../utilidades/formato'
 
@@ -16,15 +15,12 @@ export default function Inicio({ alCerrarSesion }: Props) {
     queryFn: () => obtenerBalance(),
   })
 
-  useEffect(() => {
-    if (error instanceof ErrorApi && error.estado === 401) {
-      alCerrarSesion()
-    }
-  }, [error, alCerrarSesion])
-
   return (
     <section>
       <h2>Panel</h2>
+      <nav>
+        <Link to="/transacciones">Ver transacciones</Link>
+      </nav>
       {isPending && <p>Cargando balance...</p>}
       {error && <p role="alert">{error.message}</p>}
       {balance && (

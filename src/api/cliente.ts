@@ -29,6 +29,9 @@ export async function peticion<T>(
   const datos = await respuesta.json().catch(() => null)
 
   if (!respuesta.ok) {
+    if (respuesta.status === 401 && token) {
+      window.dispatchEvent(new Event('sesion-expirada'))
+    }
     const mensaje = Array.isArray(datos?.message)
       ? datos.message.join(', ')
       : (datos?.message ?? 'Error inesperado')
