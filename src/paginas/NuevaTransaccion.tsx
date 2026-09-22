@@ -1,13 +1,10 @@
 import { Link, useNavigate } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { crearTransaccion } from '../api/transacciones'
+import { hoy } from '../utilidades/fechas'
 import FormularioTransaccion, {
   type ValoresFormulario,
 } from '../componentes/FormularioTransaccion'
-
-function hoy(): string {
-  return new Date().toLocaleDateString('en-CA')
-}
 
 export default function NuevaTransaccion() {
   const navigate = useNavigate()

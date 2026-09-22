@@ -8,6 +8,16 @@ export type Balance = {
   balance: string
 }
 
-export function obtenerBalance() {
-  return peticion<Balance>('/balance')
+export type FiltrosBalance = {
+  desde?: string
+  hasta?: string
+}
+
+export function obtenerBalance(filtros: FiltrosBalance = {}) {
+  const parametros = new URLSearchParams()
+  if (filtros.desde) parametros.set('desde', filtros.desde)
+  if (filtros.hasta) parametros.set('hasta', filtros.hasta)
+
+  const query = parametros.toString()
+  return peticion<Balance>(`/balance${query ? `?${query}` : ''}`)
 }
