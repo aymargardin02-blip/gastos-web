@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   actualizarTransaccion,
@@ -39,9 +39,7 @@ export default function EditarTransaccion() {
   return (
     <section>
       <h2>Editar transacción</h2>
-      <p>
-        <Link to="/transacciones">← Volver a la lista</Link>
-      </p>
+     
       {!idValido && <p role="alert">La dirección no es válida.</p>}
       {idValido && transaccion.isPending && <p>Cargando transacción...</p>}
       {transaccion.error && (

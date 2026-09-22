@@ -1,5 +1,4 @@
 import { useState, type SyntheticEvent } from 'react'
-import { Link } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   actualizarCategoria,
@@ -124,9 +123,6 @@ export default function Categorias() {
   return (
     <section>
       <h2>Categorías</h2>
-      <p>
-        <Link to="/">← Volver al panel</Link>
-      </p>
 
       {categorias.isPending && <p>Cargando categorías...</p>}
       {categorias.error && <p role="alert">{categorias.error.message}</p>}

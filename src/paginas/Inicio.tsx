@@ -1,17 +1,14 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
 import { useQuery } from '@tanstack/react-query'
 import { obtenerBalance, type FiltrosBalance } from '../api/balance'
 import { formatearDinero } from '../utilidades/formato'
 import { hoy, primerDiaDelMes } from '../utilidades/fechas'
 
-type Props = { alCerrarSesion: () => void }
-
 type Rango = { desde: string; hasta: string }
 
 const SIN_RANGO: Rango = { desde: '', hasta: '' }
 
-export default function Inicio({ alCerrarSesion }: Props) {
+export default function Inicio() {
   const [rango, setRango] = useState<Rango>(SIN_RANGO)
 
   const filtros: FiltrosBalance = {
@@ -45,11 +42,6 @@ export default function Inicio({ alCerrarSesion }: Props) {
   return (
     <section>
       <h2>Panel</h2>
-      <nav>
-        <Link to="/transacciones">Ver transacciones</Link>{' '}
-        <Link to="/transacciones/nueva">Nueva transacción</Link>{' '}
-        <Link to="/categorias">Categorías</Link>
-      </nav>
 
       <form onSubmit={(e) => e.preventDefault()}>
         <label>
@@ -96,7 +88,6 @@ export default function Inicio({ alCerrarSesion }: Props) {
           <dd>{formatearDinero(balance.balance)}</dd>
         </dl>
       )}
-      <button onClick={alCerrarSesion}>Cerrar sesión</button>
     </section>
   )
 }

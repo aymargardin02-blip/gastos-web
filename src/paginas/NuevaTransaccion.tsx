@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { crearTransaccion } from '../api/transacciones'
 import { hoy } from '../utilidades/fechas'
@@ -32,9 +32,7 @@ export default function NuevaTransaccion() {
   return (
     <section>
       <h2>Nueva transacción</h2>
-      <p>
-        <Link to="/transacciones">← Volver a la lista</Link>
-      </p>
+
       <FormularioTransaccion
         valoresIniciales={valoresIniciales}
         textoBoton="Guardar"

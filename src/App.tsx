@@ -8,6 +8,8 @@ import Transacciones from './paginas/Transacciones'
 import NuevaTransaccion from './paginas/NuevaTransaccion'
 import EditarTransaccion from './paginas/EditarTransaccion'
 import Categorias from './paginas/Categorias'
+import NoEncontrado from './paginas/NoEncontrado'
+import DisenoProtegido from './componentes/DisenoProtegido'
 import { borrarToken, guardarToken, obtenerToken } from './api/sesion'
 
 function App() {
@@ -30,59 +32,34 @@ function App() {
     setToken(nuevoToken)
   }
 
-  return (
-    <main>
-      <h1>Gastos</h1>
+  if (!token) {
+    return (
       <Routes>
-        <Route
-          path="/"
-          element={
-            token ? (
-              <Inicio alCerrarSesion={cerrarSesion} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route
-          path="/transacciones"
-          element={token ? <Transacciones /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/transacciones/nueva"
-          element={
-            token ? <NuevaTransaccion /> : <Navigate to="/login" replace />
-          }
-        />
+        <Route path="/login" element={<Login alAcceder={alAcceder} />} />
+        <Route path="/registro" element={<Registro alAcceder={alAcceder} />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    )
+  }
+
+  return (
+    <Routes>
+      <Route
+        element={<DisenoProtegido alCerrarSesion={cerrarSesion} />}
+      >
+        <Route path="/" element={<Inicio />} />
+        <Route path="/transacciones" element={<Transacciones />} />
+        <Route path="/transacciones/nueva" element={<NuevaTransaccion />} />
         <Route
           path="/transacciones/:id/editar"
-          element={
-            token ? <EditarTransaccion /> : <Navigate to="/login" replace />
-          }
+          element={<EditarTransaccion />}
         />
-        <Route
-          path="/categorias"
-          element={token ? <Categorias /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/login"
-          element={
-            token ? <Navigate to="/" replace /> : <Login alAcceder={alAcceder} />
-          }
-        />
-        <Route
-          path="/registro"
-          element={
-            token ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Registro alAcceder={alAcceder} />
-            )
-          }
-        />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </main>
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/login" element={<Navigate to="/" replace />} />
+        <Route path="/registro" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NoEncontrado />} />
+      </Route>
+    </Routes>
   )
 }
 

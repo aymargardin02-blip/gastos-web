@@ -107,12 +107,11 @@ export default function Transacciones() {
 
   return (
     <section>
-      <h2>Transacciones</h2>
+            <h2>Transacciones</h2>
       <p>
-        <Link to="/">← Volver al panel</Link>{' '}
         <Link to="/transacciones/nueva">Nueva transacción</Link>
       </p>
-
+      
       <form onSubmit={(e) => e.preventDefault()}>
         <label>
           Tipo
