@@ -30,7 +30,7 @@ export default function NuevaTransaccion() {
   }
 
   return (
-    <section>
+    <section className="pagina-formulario">
       <h2>Nueva transacción</h2>
 
       <FormularioTransaccion

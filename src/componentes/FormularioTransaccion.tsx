@@ -2,8 +2,8 @@ import { useState, type SyntheticEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { listarCategorias } from '../api/categorias'
 import type { NuevaTransaccion } from '../api/transacciones'
-
-type Tipo = 'INGRESO' | 'GASTO'
+import SelectorTipo, { type Tipo } from './SelectorTipo'
+import '../estilos/formulario-transaccion.css'
 
 export type ValoresFormulario = {
   tipo: Tipo
@@ -62,19 +62,20 @@ export default function FormularioTransaccion({
   }
 
   return (
-    <form onSubmit={enviar}>
-      {categorias.error && <p role="alert">{categorias.error.message}</p>}
-      <label>
-        Tipo
-        <select
-          value={tipo}
-          onChange={(e) => cambiarTipo(e.target.value as Tipo)}
-        >
-          <option value="GASTO">Gasto</option>
-          <option value="INGRESO">Ingreso</option>
-        </select>
-      </label>
-      <label>
+    <form className="formulario-transaccion" onSubmit={enviar}>
+      {categorias.error && (
+        <p className="formulario-transaccion__error" role="alert">
+          {categorias.error.message}
+        </p>
+      )}
+
+      <SelectorTipo
+        valor={tipo}
+        alCambiar={cambiarTipo}
+        etiquetaGrupo="Tipo de transacción"
+      />
+
+      <label className="campo">
         Categoría
         <select
           value={categoriaId}
@@ -90,33 +91,37 @@ export default function FormularioTransaccion({
         </select>
       </label>
       {categorias.isSuccess && categoriasDelTipo.length === 0 && (
-        <p>
+        <p className="formulario-transaccion__aviso">
           Todavía no tienes categorías de{' '}
           {tipo === 'GASTO' ? 'gasto' : 'ingreso'}.
         </p>
       )}
-      <label>
-        Monto
-        <input
-          type="number"
-          inputMode="decimal"
-          step="0.01"
-          min="0.01"
-          value={monto}
-          onChange={(e) => setMonto(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Fecha
-        <input
-          type="date"
-          value={fecha}
-          onChange={(e) => setFecha(e.target.value)}
-          required
-        />
-      </label>
-      <label>
+
+      <div className="formulario-transaccion__fila">
+        <label className="campo">
+          Monto
+          <input
+            type="number"
+            inputMode="decimal"
+            step="0.01"
+            min="0.01"
+            value={monto}
+            onChange={(e) => setMonto(e.target.value)}
+            required
+          />
+        </label>
+        <label className="campo">
+          Fecha
+          <input
+            type="date"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+            required
+          />
+        </label>
+      </div>
+
+      <label className="campo">
         Descripción (opcional)
         <input
           type="text"
@@ -124,8 +129,14 @@ export default function FormularioTransaccion({
           onChange={(e) => setDescripcion(e.target.value)}
         />
       </label>
-      {error && <p role="alert">{error}</p>}
-      <button type="submit" disabled={enviando}>
+
+      {error && (
+        <p className="formulario-transaccion__error" role="alert">
+          {error}
+        </p>
+      )}
+
+      <button type="submit" className="principal" disabled={enviando}>
         {enviando ? textoEnviando : textoBoton}
       </button>
     </form>

@@ -37,14 +37,12 @@ export default function EditarTransaccion() {
   const datos = transaccion.data
 
   return (
-    <section>
+    <section className="pagina-formulario">
       <h2>Editar transacción</h2>
-     
+
       {!idValido && <p role="alert">La dirección no es válida.</p>}
       {idValido && transaccion.isPending && <p>Cargando transacción...</p>}
-      {transaccion.error && (
-        <p role="alert">{transaccion.error.message}</p>
-      )}
+      {transaccion.error && <p role="alert">{transaccion.error.message}</p>}
       {datos && (
         <FormularioTransaccion
           valoresIniciales={{

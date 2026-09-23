@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --fuente: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --lima: #C6F135;
@@ -39,6 +40,7 @@
 }
 
 [data-tema='oscuro'] {
+  color-scheme: dark;
   --fondo: #060B08;
   --superficie: var(--verde-950);
   --superficie-2: var(--verde-800);
@@ -153,4 +155,14 @@ button.principal {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--texto);
+  -webkit-box-shadow: 0 0 0px 1000px var(--superficie-2) inset;
+  box-shadow: 0 0 0px 1000px var(--superficie-2) inset;
+  transition: background-color 9999s ease-in-out 0s;
+  caret-color: var(--texto);
 }

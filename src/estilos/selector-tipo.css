@@ -1,0 +1,50 @@
+.toggle-tipo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--superficie-2);
+  border-radius: var(--radio-pill);
+  padding: 4px;
+}
+
+.toggle-tipo__opcion {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radio-pill);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+  overflow: hidden;
+}
+
+.toggle-tipo__opcion:active {
+  transform: none;
+}
+
+.toggle-tipo__opcion.activo {
+  color: var(--texto);
+}
+
+.toggle-tipo__indicador {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radio-pill);
+  z-index: 0;
+  box-shadow: 0 2px 8px rgba(6, 11, 8, 0.12);
+}
+
+.toggle-tipo__indicador--gasto {
+  background: var(--rojo-suave);
+}
+
+.toggle-tipo__indicador--ingreso {
+  background: var(--acento-suave);
+}
+
+.toggle-tipo__texto {
+  position: relative;
+  z-index: 1;
+}

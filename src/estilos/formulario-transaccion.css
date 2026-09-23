@@ -1,0 +1,58 @@
+.formulario-transaccion {
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.formulario-transaccion .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.formulario-transaccion__fila {
+  display: flex;
+  gap: 1rem;
+}
+
+.formulario-transaccion__fila .campo {
+  flex: 1;
+}
+
+.formulario-transaccion__aviso {
+  font-size: 0.8125rem;
+  margin-top: -0.5rem;
+}
+
+.formulario-transaccion__error {
+  font-size: 0.875rem;
+  color: var(--peligro);
+  background: var(--peligro-suave);
+  border-radius: var(--radio-chico);
+  padding: 0.7rem 0.9rem;
+}
+
+.formulario-transaccion button[type='submit'] {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.pagina-formulario {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.pagina-formulario h2 {
+  margin-bottom: 1.25rem;
+  text-align: center;
+}

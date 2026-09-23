@@ -37,26 +37,26 @@
   font-size: 0.9375rem;
 }
 
-.campo {
+.tarjeta-auth .campo {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   margin-bottom: 1rem;
 }
 
-.campo label {
+.tarjeta-auth .campo label {
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--heroe-texto-secundario);
 }
 
-.campo input {
+.tarjeta-auth .campo input {
   background: rgba(244, 243, 236, 0.08);
   color: var(--heroe-texto);
   border: 1px solid rgba(244, 243, 236, 0.12);
 }
 
-.campo input:focus-visible {
+.tarjeta-auth .campo input:focus-visible {
   border-color: var(--acento);
   background: rgba(244, 243, 236, 0.12);
 }

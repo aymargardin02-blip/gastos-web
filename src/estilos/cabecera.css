@@ -78,8 +78,8 @@
 }
 
 .boton-icono:hover {
-  background: var(--superficie-2);
-  color: var(--texto);
+  background: var(--acento-suave);
+  color: var(--verde-900);
 }
 
 @media (max-width: 640px) {
