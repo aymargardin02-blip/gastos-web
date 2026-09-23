@@ -14,7 +14,6 @@
   color: var(--heroe-texto);
   border-radius: var(--radio);
   padding: 2.5rem 2rem;
-  animation: entrar 260ms var(--easing);
 }
 
 .tarjeta-auth__marca {
@@ -95,19 +94,7 @@
   animation: entrar 180ms var(--easing);
 }
 
-@keyframes entrar {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .tarjeta-auth,
   .mensaje-error {
     animation: none;
   }
