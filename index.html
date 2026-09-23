@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>gastos-web</title>
+
+    <script>
+  (function () {
+    var guardado = localStorage.getItem('gastos_tema')
+    var tema =
+      guardado === 'claro' || guardado === 'oscuro'
+        ? guardado
+        : window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'oscuro'
+          : 'claro'
+    document.documentElement.setAttribute('data-tema', tema)
+  })()
+</script>
+
   </head>
   <body>
     <div id="root"></div>

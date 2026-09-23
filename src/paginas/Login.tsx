@@ -1,6 +1,7 @@
 import { useState, type SyntheticEvent } from 'react'
 import { Link } from 'react-router'
 import { login } from '../api/autenticacion'
+import TarjetaAuth from '../componentes/TarjetaAuth'
 
 type Props = { alAcceder: (token: string) => void }
 
@@ -25,33 +26,45 @@ export default function Login({ alAcceder }: Props) {
   }
 
   return (
-    <form onSubmit={enviar}>
-      <h2>Iniciar sesión</h2>
-      <label>
-        Correo
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Contraseña
-        <input
-          type="password"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-          required
-        />
-      </label>
-      {error && <p role="alert">{error}</p>}
-      <button type="submit" disabled={cargando}>
-        {cargando ? 'Entrando...' : 'Entrar'}
-      </button>
-      <p>
+    <TarjetaAuth
+      titulo="Inicia sesión"
+      subtitulo="Controla tus ingresos y gastos"
+    >
+      <form onSubmit={enviar}>
+        <div className="campo">
+          <label htmlFor="email">Correo</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+        </div>
+        <div className="campo">
+          <label htmlFor="contrasena">Contraseña</label>
+          <input
+            id="contrasena"
+            type="password"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            required
+            autoComplete="current-password"
+          />
+        </div>
+        {error && (
+          <p className="mensaje-error" role="alert">
+            {error}
+          </p>
+        )}
+        <button type="submit" className="principal" disabled={cargando}>
+          {cargando ? 'Entrando...' : 'Entrar'}
+        </button>
+      </form>
+      <p className="tarjeta-auth__pie">
         ¿No tienes cuenta? <Link to="/registro">Regístrate</Link>
       </p>
-    </form>
+    </TarjetaAuth>
   )
 }

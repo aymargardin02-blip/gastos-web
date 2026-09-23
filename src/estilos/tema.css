@@ -18,6 +18,21 @@
 
   --duracion-rapida: 150ms;
   --easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --fondo: #F7F8F7;
+  --superficie: #FFFFFF;
+  --superficie-2: #F0F2F0;
+  --texto: #141813;
+  --texto-secundario: #5B615A;
+  --borde: rgba(20, 24, 19, 0.1);
+  --acento: var(--verde-500);
+  --acento-texto: var(--verde-600);
+  --acento-suave: var(--verde-50);
+  --peligro: var(--rojo-500);
+  --peligro-suave: var(--rojo-100);
+  --material: rgba(255, 255, 255, 0.72);
+  --material-borde: rgba(255, 255, 255, 0.5);
+
 }
 
 [data-tema='claro'] {
