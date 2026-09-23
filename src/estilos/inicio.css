@@ -1,0 +1,148 @@
+.panel {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.panel__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+}
+
+.panel__fechas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.campo-fecha {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  min-width: 140px;
+  flex: 1;
+}
+
+.panel__atajos {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.panel__atajos button {
+  font-size: 0.8125rem;
+  padding: 0.6rem 1.1rem;
+}
+
+.panel__estado {
+  color: var(--texto-secundario);
+}
+
+.tarjeta-balance {
+  background: var(--heroe-fondo);
+  color: var(--heroe-texto);
+  border-radius: var(--radio);
+  padding: 1.75rem 1.5rem;
+  box-shadow: 0 20px 40px rgba(6, 11, 8, 0.25);
+}
+
+.tarjeta-balance__periodo {
+  color: var(--heroe-texto-secundario);
+  font-size: 0.8125rem;
+  margin-bottom: 1rem;
+}
+
+.tarjeta-balance__etiqueta {
+  color: var(--heroe-texto-secundario);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.tarjeta-balance__cifra {
+  color: var(--heroe-texto);
+  font-size: clamp(2.5rem, 10vw, 3.5rem);
+  line-height: 1;
+}
+
+.tarjeta-balance__detalle {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(244, 243, 236, 0.12);
+}
+
+.tarjeta-balance__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tarjeta-balance__icono {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.tarjeta-balance__icono svg {
+  width: 15px;
+  height: 15px;
+}
+
+.tarjeta-balance__icono--ingreso {
+  background: rgba(198, 241, 53, 0.18);
+  color: var(--lima);
+}
+
+.tarjeta-balance__icono--gasto {
+  background: rgba(255, 107, 94, 0.18);
+  color: var(--rojo);
+}
+
+.tarjeta-balance__item dt {
+  color: var(--heroe-texto-secundario);
+  font-size: 0.75rem;
+  margin: 0 0 0.15rem;
+}
+
+.tarjeta-balance__item dd {
+  margin: 0;
+  color: var(--heroe-texto);
+  font-size: 1rem;
+}
+
+.panel h2 {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.panel h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 4px;
+  border-radius: var(--radio-pill);
+  background: var(--lima);
+}
+
+.panel__atajos button.activo {
+  background: var(--heroe-fondo);
+  color: var(--lima);
+  border-color: transparent;
+}
