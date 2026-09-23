@@ -1,0 +1,201 @@
+.transacciones {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.transacciones__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.transacciones__cabecera h2 {
+  position: relative;
+  padding-left: 0.9rem;
+}
+
+.transacciones__cabecera h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 4px;
+  border-radius: var(--radio-pill);
+  background: var(--lima);
+}
+
+.boton-nueva {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--acento);
+  color: var(--lima-texto);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radio-pill);
+  transition: transform 100ms var(--easing);
+}
+
+.boton-nueva:active {
+  transform: scale(0.96);
+}
+
+.transacciones__filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1rem;
+}
+
+.transacciones__filtros .campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  min-width: 130px;
+  flex: 1;
+}
+
+.transacciones__estado {
+  color: var(--texto-secundario);
+}
+
+.transacciones__total {
+  font-size: 0.8125rem;
+  color: var(--texto-secundario);
+}
+
+.badge-tipo {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radio-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-tipo--ingreso {
+  background: var(--acento-suave);
+  color: var(--lima-texto);
+}
+
+[data-tema='oscuro'] .badge-tipo--ingreso {
+  color: var(--lima);
+}
+
+.badge-tipo--gasto {
+  background: var(--rojo-suave);
+  color: var(--peligro);
+}
+
+.transacciones__tabla-envoltura {
+  overflow-x: auto;
+}
+
+.transacciones__tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transacciones__tabla th {
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0 0.75rem 0.6rem;
+}
+
+.transacciones__tabla td {
+  padding: 0.85rem 0.75rem;
+  border-top: 1px solid var(--borde);
+  font-size: 0.9375rem;
+}
+
+.transacciones__tabla tbody tr:hover {
+  background: var(--superficie-2);
+}
+
+.transacciones__acciones-fila {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.transacciones__acciones-fila a {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.transacciones__acciones-fila button {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8125rem;
+}
+
+.transacciones__paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+
+@media (max-width: 640px) {
+  .transacciones__tabla thead {
+    display: none;
+  }
+
+  .transacciones__tabla,
+  .transacciones__tabla tbody,
+  .transacciones__tabla tr,
+  .transacciones__tabla td {
+    display: block;
+    width: 100%;
+  }
+
+  .transacciones__tabla tr {
+    background: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-chico);
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .transacciones__tabla td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.4rem 0;
+    border-top: none;
+    text-align: right;
+  }
+
+  .transacciones__tabla td::before {
+    content: attr(data-etiqueta);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    text-align: left;
+  }
+
+  .transacciones__tabla td[data-etiqueta='Monto'] {
+    font-weight: 700;
+  }
+}

@@ -13,6 +13,8 @@ import {
 } from '../api/transacciones'
 import { listarCategorias } from '../api/categorias'
 import { formatearDinero, formatearFecha } from '../utilidades/formato'
+import ModalConfirmacion from '../componentes/ModalConfirmacion'
+import '../estilos/transacciones.css'
 
 type Tipo = '' | 'INGRESO' | 'GASTO'
 
@@ -34,6 +36,7 @@ export default function Transacciones() {
   const queryClient = useQueryClient()
   const [pagina, setPagina] = useState(1)
   const [filtros, setFiltros] = useState<Filtros>(FILTROS_VACIOS)
+  const [idAEliminar, setIdAEliminar] = useState<number | null>(null)
 
   const filtrosApi: FiltrosTransacciones = {
     tipo: filtros.tipo || undefined,
@@ -95,25 +98,31 @@ export default function Transacciones() {
     setPagina(1)
   }
 
-  function confirmarEliminar(id: number) {
-    if (
-      window.confirm(
-        '¿Eliminar esta transacción? Esta acción no se puede deshacer.',
-      )
-    ) {
-      eliminar.mutate(id)
-    }
+  function pedirConfirmacion(id: number) {
+    setIdAEliminar(id)
+  }
+
+  function confirmarEliminar() {
+    if (idAEliminar === null) return
+    eliminar.mutate(idAEliminar, {
+      onSuccess: () => setIdAEliminar(null),
+    })
   }
 
   return (
-    <section>
-            <h2>Transacciones</h2>
-      <p>
-        <Link to="/transacciones/nueva">Nueva transacción</Link>
-      </p>
-      
-      <form onSubmit={(e) => e.preventDefault()}>
-        <label>
+    <section className="transacciones">
+      <div className="transacciones__cabecera">
+        <h2>Transacciones</h2>
+        <Link className="boton-nueva" to="/transacciones/nueva">
+          + Nueva transacción
+        </Link>
+      </div>
+
+      <form
+        className="transacciones__filtros"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <label className="campo">
           Tipo
           <select
             value={filtros.tipo}
@@ -124,7 +133,7 @@ export default function Transacciones() {
             <option value="GASTO">Gastos</option>
           </select>
         </label>
-        <label>
+        <label className="campo">
           Categoría
           <select
             value={filtros.categoriaId}
@@ -138,7 +147,7 @@ export default function Transacciones() {
             ))}
           </select>
         </label>
-        <label>
+        <label className="campo">
           Desde
           <input
             type="date"
@@ -147,7 +156,7 @@ export default function Transacciones() {
             onChange={(e) => cambiarFiltro('desde', e.target.value)}
           />
         </label>
-        <label>
+        <label className="campo">
           Hasta
           <input
             type="date"
@@ -161,58 +170,97 @@ export default function Transacciones() {
         </button>
       </form>
 
-      {transacciones.isPending && <p>Cargando transacciones...</p>}
-      {transacciones.error && (
-        <p role="alert">{transacciones.error.message}</p>
+      {transacciones.isPending && (
+        <p className="transacciones__estado">Cargando transacciones...</p>
       )}
-      {eliminar.error && <p role="alert">{eliminar.error.message}</p>}
+      {transacciones.error && (
+        <p className="transacciones__estado" role="alert">
+          {transacciones.error.message}
+        </p>
+      )}
+      {eliminar.error && (
+        <p className="transacciones__estado" role="alert">
+          {eliminar.error.message}
+        </p>
+      )}
+
       {resultado &&
         (resultado.datos.length === 0 ? (
-          <p>
+          <p className="transacciones__estado">
             {hayFiltros
               ? 'No hay transacciones con esos filtros.'
               : 'Todavía no tienes transacciones.'}
           </p>
         ) : (
           <>
-            <p>
+            <p className="transacciones__total">
               {resultado.total}{' '}
               {resultado.total === 1 ? 'resultado' : 'resultados'}
             </p>
-            <table aria-busy={transacciones.isPlaceholderData}>
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Tipo</th>
-                  <th>Categoría</th>
-                  <th>Descripción</th>
-                  <th>Monto</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {resultado.datos.map((t) => (
-                  <tr key={t.id}>
-                    <td>{formatearFecha(t.fecha)}</td>
-                    <td>{t.tipo === 'INGRESO' ? 'Ingreso' : 'Gasto'}</td>
-                    <td>{nombres.get(t.categoriaId) ?? '—'}</td>
-                    <td>{t.descripcion ?? ''}</td>
-                    <td>{formatearDinero(t.monto)}</td>
-                    <td>
-                      <Link to={`/transacciones/${t.id}/editar`}>Editar</Link>{' '}
-                      <button
-                        type="button"
-                        onClick={() => confirmarEliminar(t.id)}
-                        disabled={eliminar.isPending}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
+
+            <div className="transacciones__tabla-envoltura">
+              <table
+                className="transacciones__tabla"
+                aria-busy={transacciones.isPlaceholderData}
+              >
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Categoría</th>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            <nav aria-label="Paginación">
+                </thead>
+                <tbody>
+                  {resultado.datos.map((t) => (
+                    <tr key={t.id}>
+                      <td data-etiqueta="Fecha">{formatearFecha(t.fecha)}</td>
+                      <td data-etiqueta="Tipo">
+                        <span
+                          className={
+                            t.tipo === 'INGRESO'
+                              ? 'badge-tipo badge-tipo--ingreso'
+                              : 'badge-tipo badge-tipo--gasto'
+                          }
+                        >
+                          {t.tipo === 'INGRESO' ? 'Ingreso' : 'Gasto'}
+                        </span>
+                      </td>
+                      <td data-etiqueta="Categoría">
+                        {nombres.get(t.categoriaId) ?? '—'}
+                      </td>
+                      <td data-etiqueta="Descripción">
+                        {t.descripcion ?? ''}
+                      </td>
+                      <td data-etiqueta="Monto" className="numero">
+                        {formatearDinero(t.monto)}
+                      </td>
+                      <td data-etiqueta="Acciones">
+                        <div className="transacciones__acciones-fila">
+                          <Link to={`/transacciones/${t.id}/editar`}>
+                            Editar
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => pedirConfirmacion(t.id)}
+                            disabled={eliminar.isPending}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <nav
+              className="transacciones__paginacion"
+              aria-label="Paginación"
+            >
               <button
                 onClick={() => setPagina((p) => p - 1)}
                 disabled={pagina <= 1}
@@ -220,8 +268,7 @@ export default function Transacciones() {
                 Anterior
               </button>
               <span>
-                {' '}
-                Página {resultado.pagina} de {resultado.totalPaginas}{' '}
+                Página {resultado.pagina} de {resultado.totalPaginas}
               </span>
               <button
                 onClick={() => setPagina((p) => p + 1)}
@@ -232,6 +279,17 @@ export default function Transacciones() {
             </nav>
           </>
         ))}
+
+      <ModalConfirmacion
+        abierto={idAEliminar !== null}
+        titulo="Eliminar transacción"
+        mensaje="¿Eliminar esta transacción? Esta acción no se puede deshacer."
+        textoConfirmar="Eliminar"
+        peligro
+        cargando={eliminar.isPending}
+        onConfirmar={confirmarEliminar}
+        onCancelar={() => setIdAEliminar(null)}
+      />
     </section>
   )
 }
