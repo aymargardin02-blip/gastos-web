@@ -21,8 +21,9 @@ export default function SelectorTema() {
   }
 
   return (
-    <button
+   <button
       type="button"
+      className="boton-icono"
       onClick={alternar}
       aria-label={tema === 'claro' ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro'}
       title={tema === 'claro' ? 'Tema oscuro' : 'Tema claro'}

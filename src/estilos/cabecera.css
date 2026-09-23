@@ -1,0 +1,111 @@
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--material);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--material-borde);
+}
+
+.cabecera__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--texto);
+}
+
+.cabecera__logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--acento);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.cabecera__marca h1 {
+  font-size: 1.0625rem;
+}
+
+.cabecera__nav {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.cabecera__nav a {
+  color: var(--texto-secundario);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radio-chico);
+  transition: background-color var(--duracion-rapida) var(--easing),
+    color var(--duracion-rapida) var(--easing);
+}
+
+.cabecera__nav a:hover {
+  background: var(--superficie-2);
+  text-decoration: none;
+}
+
+.cabecera__nav a.active {
+  color: var(--acento-texto);
+  background: var(--acento-suave);
+}
+
+.cabecera__acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.boton-icono {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1rem;
+  background: transparent;
+  border-color: transparent;
+}
+
+.boton-icono:hover {
+  background: var(--superficie-2);
+}
+
+@media (max-width: 640px) {
+  .cabecera {
+    padding: 0.75rem 1rem;
+  }
+  .cabecera__marca h1 {
+    display: none;
+  }
+  .cabecera__nav {
+    gap: 0;
+  }
+  .cabecera__nav a {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .cabecera {
+    background: var(--superficie);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
