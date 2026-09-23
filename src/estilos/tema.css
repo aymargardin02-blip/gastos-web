@@ -33,6 +33,7 @@
   --acento: var(--lima);
   --acento-texto: var(--lima-texto);
   --acento-sobre-oscuro: var(--lima);
+  --acento-suave: rgba(198, 241, 53, 0.16);
   --peligro: var(--rojo-texto-claro);
   --peligro-suave: var(--rojo-suave);
 }
