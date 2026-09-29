@@ -1,0 +1,344 @@
+.cuentas {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+}
+
+.cuentas__encabezado {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.cuentas__eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--acento);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cuentas__encabezado h2 {
+  margin: 0;
+  color: var(--texto);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.cuentas__encabezado p {
+  margin: 8px 0 0;
+  color: var(--texto-secundario);
+  font-size: 1rem;
+}
+
+.cuentas__boton-nueva {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--acento);
+  color: var(--acento-texto);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+}
+
+.cuentas__boton-nueva span {
+  font-size: 1.35rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.cuentas__boton-nueva:hover {
+  filter: brightness(0.96);
+}
+
+.cuentas__boton-nueva:active {
+  transform: scale(0.97);
+}
+
+.cuentas__resumen {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  margin-bottom: 24px;
+  border: 1px solid var(--borde);
+  border-radius: 22px;
+  background: color-mix(
+    in srgb,
+    var(--superficie) 88%,
+    var(--acento) 12%
+  );
+  box-shadow: var(--sombra-suave);
+}
+
+.cuentas__resumen-icono {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 17px;
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  color: var(--acento);
+}
+
+.cuentas__resumen-icono svg {
+  width: 27px;
+  height: 27px;
+}
+
+.cuentas__resumen-total,
+.cuentas__resumen-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cuentas__resumen-total span,
+.cuentas__resumen-dato span {
+  color: var(--texto-secundario);
+  font-size: 0.85rem;
+}
+
+.cuentas__resumen-total strong {
+  color: var(--texto);
+  font-size: 1.25rem;
+}
+
+.cuentas__resumen-dato {
+  min-width: 90px;
+  padding-left: 20px;
+  border-left: 1px solid var(--borde);
+}
+
+.cuentas__resumen-dato strong {
+  color: var(--texto);
+  font-size: 1.15rem;
+}
+
+.cuentas__lista {
+  display: grid;
+  gap: 12px;
+}
+
+.cuenta-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  min-height: 92px;
+  padding: 16px 18px;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background: var(--superficie);
+  box-shadow: var(--sombra-suave);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.cuenta-card:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--acento) 35%, var(--borde));
+}
+
+.cuenta-card--archivada {
+  opacity: 0.68;
+}
+
+.cuenta-card__icono {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  color: var(--acento);
+}
+
+.cuenta-card__icono svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cuenta-card__contenido {
+  min-width: 0;
+}
+
+.cuenta-card__cabecera {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cuenta-card h3 {
+  margin: 0;
+  color: var(--texto);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.cuenta-card p {
+  margin: 5px 0 0;
+  color: var(--texto-secundario);
+  font-size: 0.88rem;
+}
+
+.cuenta-card__estado {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  color: var(--acento);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.cuenta-card__estado--archivada {
+  background: var(--superficie-2);
+  color: var(--texto-secundario);
+}
+
+.cuenta-card__saldo {
+  color: var(--texto);
+  font-size: 1.05rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cuenta-card__menu {
+  display: grid;
+  gap: 3px;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+}
+
+.cuenta-card__menu span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.cuenta-card__menu:hover {
+  background: var(--superficie-2);
+}
+
+.cuentas__estado,
+.cuentas__vacio {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 32px;
+  border: 1px solid var(--borde);
+  border-radius: 22px;
+  background: var(--superficie);
+  text-align: center;
+}
+
+.cuentas__estado p {
+  margin: 0;
+  color: var(--texto-secundario);
+}
+
+.cuentas__estado--error {
+  color: var(--texto);
+}
+
+.cuentas__vacio-icono {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  color: var(--acento);
+}
+
+.cuentas__vacio-icono svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cuentas__vacio h3 {
+  margin: 0;
+  color: var(--texto);
+  font-size: 1.1rem;
+}
+
+.cuentas__vacio p {
+  max-width: 380px;
+  margin: 7px 0 18px;
+  color: var(--texto-secundario);
+}
+
+@media (max-width: 720px) {
+  .cuentas {
+    padding: 24px 16px 32px;
+  }
+
+  .cuentas__encabezado {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+
+  .cuentas__boton-nueva {
+    width: 100%;
+  }
+
+  .cuentas__resumen {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .cuentas__resumen-dato {
+    min-width: 0;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--borde);
+    border-left: 0;
+  }
+
+  .cuenta-card {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .cuenta-card__saldo {
+    grid-column: 2 / 3;
+    grid-row: 2;
+    justify-self: start;
+    font-size: 0.95rem;
+  }
+
+  .cuenta-card__menu {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  .cuenta-card__cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+}

@@ -13,9 +13,12 @@
     bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
     z-index: 20;
     padding: 0.5rem 0.75rem;
-    background: var(--verde-950);
+    background: color-mix(in srgb, var(--superficie) 82%, transparent);
+    border: 1px solid var(--borde);
     border-radius: var(--radio-pill);
-    box-shadow: 0 12px 32px rgba(6, 11, 8, 0.35);
+    box-shadow: 0 12px 32px rgba(6, 11, 8, 0.18);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
   }
 
   .navegacion-inferior__item {
@@ -25,8 +28,9 @@
     gap: 0.2rem;
     padding: 0.4rem 0.9rem;
     border-radius: var(--radio-pill);
-    color: var(--heroe-texto-secundario);
-    transition: color var(--duracion-rapida) var(--easing),
+    color: var(--texto-secundario);
+    transition:
+      color var(--duracion-rapida) var(--easing),
       background-color var(--duracion-rapida) var(--easing);
   }
 
@@ -41,11 +45,10 @@
   }
 
   .navegacion-inferior__item.activo {
-    color: var(--lima);
-    background: var(--verde-800);
+    color: var(--acento);
+    background: color-mix(in srgb, var(--acento) 10%, transparent);
   }
 
-  /* Evita que la barra flotante tape el final de cada pantalla */
   .contenido-protegido {
     padding-bottom: 6rem;
   }
