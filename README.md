@@ -6,16 +6,6 @@ Frontend en **React** y **TypeScript** para gestionar ingresos y gastos personal
 
 > El frontend consume la API alojada en un plan gratuito: si lleva un rato sin recibir peticiones, la primera carga puede tardar unos segundos mientras el servicio se reactiva.
 
-## Capturas
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
-<!-- Inserta aquí 2-4 capturas: Panel (claro y oscuro), Transacciones, Categorías en edición -->
-
 ## Funcionalidades
 
 - Registro e inicio de sesión contra la API, con token guardado en `localStorage` y cierre de sesión automático cuando el token caduca.

@@ -1,19 +1,14 @@
+/* ============================================================
+   tema.css — Sistema de diseño de gastos-web
+   Claro: warm light (fondo gris claro, card blanco, verde profundo)
+   Oscuro: cards claras sobre fondo profundo, acento verde brillante
+   ============================================================ */
+
+/* ============================================================
+   1. Tokens compartidos
+   ============================================================ */
 :root {
-  color-scheme: light;
   --fuente: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-  --lima: #C6F135;
-  --lima-oscuro: #9FC223;
-  --lima-texto: #4A5E0F;
-
-  --verde-950: #08201A;
-  --verde-900: #0C2B22;
-  --verde-800: #123A2E;
-  --verde-700: #1B4C3C;
-
-  --rojo: #FF6B5E;
-  --rojo-suave: rgba(255, 107, 94, 0.15);
-  --rojo-texto-claro: #B0271D;
 
   --radio: 20px;
   --radio-chico: 14px;
@@ -22,41 +17,155 @@
   --duracion-rapida: 150ms;
   --easing: cubic-bezier(0.4, 0, 0.2, 1);
 
-  --fondo: #F4F3EC;
-  --superficie: #FFFFFF;
-  --superficie-2: #E9E7DC;
-  --texto: #0C1410;
-  --texto-secundario: #5C6459;
-  --borde: rgba(12, 20, 16, 0.1);
-  --heroe-fondo: var(--verde-900);
-  --heroe-texto: #F4F3EC;
-  --heroe-texto-secundario: rgba(244, 243, 236, 0.65);
-  --acento: var(--lima);
-  --acento-texto: var(--lima-texto);
-  --acento-sobre-oscuro: var(--lima);
-  --acento-suave: rgba(198, 241, 53, 0.16);
-  --peligro: var(--rojo-texto-claro);
-  --peligro-suave: var(--rojo-suave);
+  --material-blur: 20px;
+  --material-saturate: 180%;
 }
 
+/* ============================================================
+   2. Tema CLARO (por defecto y fallback)
+   ============================================================ */
+:root,
+[data-tema='claro'] {
+  color-scheme: light;
+
+  /* Capas: fondo gris claro, card blanco, inputs gris muy claro */
+  --fondo: #F4F6F5;
+  --superficie: #FFFFFF;
+  --superficie-2: #F1F4F2;
+  --superficie-3: #E6F8EF;
+
+  /* Texto */
+  --texto: #0B1E18;
+  --texto-secundario: #5C6F68;
+  --texto-terciario: #9AA8A2;
+
+  /* Bordes */
+  --borde: #E2E8E4;
+  --borde-sutil: rgba(11, 30, 24, 0.06);
+
+  /* Acento */
+  --acento: #0F7A5A;
+  --acento-hover: #0B6147;
+  --acento-suave: #E6F8EF;
+  --acento-texto: #FFFFFF;
+
+  /* Semánticos */
+  --peligro: #C43D2E;
+  --peligro-suave: #FBE9E6;
+  --exito: #0F7A5A;
+
+  /* Chrome translúcido */
+  --material: rgba(255, 255, 255, 0.7);
+  --material-borde: rgba(255, 255, 255, 0.6);
+  --material-sombra: 0 8px 32px rgba(11, 30, 24, 0.06);
+
+  /* Hero */
+  --heroe-fondo: #0F7A5A;
+  --heroe-texto: #FFFFFF;
+  --heroe-texto-secundario: rgba(255, 255, 255, 0.72);
+  --acento-sobre-oscuro: #22C55E;
+
+  /* Sombras */
+  --sombra-sutil: 0 1px 2px rgba(11, 30, 24, 0.04);
+  --sombra-media: 0 4px 12px rgba(11, 30, 24, 0.06);
+  --sombra-fuerte: 0 12px 32px rgba(11, 30, 24, 0.1);
+}
+
+/* ============================================================
+   3. Tema OSCURO — tres capas diferenciadas (Apple-style)
+   ============================================================ */
 [data-tema='oscuro'] {
   color-scheme: dark;
-  --fondo: #060B08;
-  --superficie: var(--verde-950);
-  --superficie-2: var(--verde-800);
-  --texto: #F4F3EC;
-  --texto-secundario: rgba(244, 243, 236, 0.6);
-  --borde: rgba(244, 243, 236, 0.1);
-  --heroe-fondo: var(--verde-900);
-  --heroe-texto: #F4F3EC;
-  --heroe-texto-secundario: rgba(244, 243, 236, 0.6);
-  --acento: var(--lima);
-  --acento-texto: var(--lima);
-  --acento-sobre-oscuro: var(--lima);
-  --peligro: var(--rojo);
-  --peligro-suave: rgba(255, 107, 94, 0.16);
+
+  /* Capas: fondo profundo, card intermedio, inputs casi negros */
+  --fondo: #0A1A14;
+  --superficie: #142E26;
+  --superficie-2: #081A14;
+  --superficie-3: #0F7A5A;
+
+  /* Texto */
+  --texto: #F1F5F3;
+  --texto-secundario: #A8B8B1;
+  --texto-terciario: #6E7E77;
+
+  /* Bordes — más visibles */
+  --borde: #1F4536;
+  --borde-sutil: rgba(255, 255, 255, 0.08);
+
+  /* Acento */
+  --acento: #22C55E;
+  --acento-hover: #1EAE52;
+  --acento-suave: #0F7A5A;
+  --acento-texto: #06231A;
+
+  /* Semánticos */
+  --peligro: #F87171;
+  --peligro-suave: #3B1E1A;
+  --exito: #22C55E;
+
+  /* Chrome translúcido */
+  --material: rgba(20, 46, 38, 0.72);
+  --material-borde: rgba(255, 255, 255, 0.08);
+  --material-sombra: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Hero */
+  --heroe-fondo: #142E26;
+  --heroe-texto: #F1F5F3;
+  --heroe-texto-secundario: rgba(241, 245, 243, 0.65);
+  --acento-sobre-oscuro: #22C55E;
+
+  /* Sombras */
+  --sombra-sutil: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --sombra-fuerte: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
+/* ============================================================
+   4. Modo SISTEMA
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema]) {
+    color-scheme: dark;
+
+    --fondo: #0A1A14;
+    --superficie: #142E26;
+    --superficie-2: #081A14;
+    --superficie-3: #0F7A5A;
+
+    --texto: #F1F5F3;
+    --texto-secundario: #A8B8B1;
+    --texto-terciario: #6E7E77;
+
+    --borde: #1F4536;
+    --borde-sutil: rgba(255, 255, 255, 0.08);
+
+    --acento: #22C55E;
+    --acento-hover: #1EAE52;
+    --acento-suave: #0F7A5A;
+    --acento-texto: #06231A;
+
+    --peligro: #F87171;
+    --peligro-suave: #3B1E1A;
+    --exito: #22C55E;
+
+    --material: rgba(20, 46, 38, 0.72);
+    --material-borde: rgba(255, 255, 255, 0.08);
+    --material-sombra: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    --heroe-fondo: #142E26;
+    --heroe-texto: #F1F5F3;
+    --heroe-texto-secundario: rgba(241, 245, 243, 0.65);
+    --acento-sobre-oscuro: #22C55E;
+
+    --sombra-sutil: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --sombra-fuerte: 0 12px 32px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ============================================================
+   5. Base global
+   ============================================================ */
 * {
   box-sizing: border-box;
 }
@@ -74,14 +183,24 @@ body {
 
 h1, h2, h3 {
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  line-height: 1.1;
   margin: 0;
 }
 
-h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
-h2 { font-size: 1.375rem; letter-spacing: -0.02em; }
-h3 { font-size: 1.0625rem; letter-spacing: -0.01em; }
+h1 {
+  font-size: clamp(1.625rem, 4vw, 2rem);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
 
 p {
   color: var(--texto-secundario);
@@ -99,6 +218,9 @@ a {
   text-decoration: none;
 }
 
+/* ============================================================
+   6. Controles
+   ============================================================ */
 button,
 input,
 select {
@@ -111,10 +233,15 @@ select {
   width: 100%;
   background: var(--superficie-2);
   color: var(--texto);
-  border: 1px solid transparent;
+  border: 1px solid var(--borde);
   border-radius: var(--radio-chico);
   padding: 0.8rem 1rem;
-  transition: border-color var(--duracion-rapida) var(--easing);
+  transition: border-color var(--duracion-rapida) var(--easing),
+    background-color var(--duracion-rapida) var(--easing);
+}
+
+input::placeholder {
+  color: var(--texto-terciario);
 }
 
 input:focus-visible,
@@ -133,7 +260,7 @@ button {
   cursor: pointer;
   border: 1px solid var(--borde);
   border-radius: var(--radio-pill);
-  background: var(--superficie-2);
+  background: var(--superficie);
   color: var(--texto);
   padding: 0.7rem 1.3rem;
   font-weight: 600;
@@ -152,17 +279,36 @@ button:disabled {
 
 button.principal {
   background: var(--acento);
-  color: var(--lima-texto);
+  color: var(--acento-texto);
   border-color: transparent;
 }
 
+button.principal:hover:not(:disabled) {
+  background: var(--acento-hover);
+}
+
+/* ============================================================
+   7. Accesibilidad
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
 
+@media (prefers-reduced-transparency: reduce) {
+  * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ============================================================
+   8. Autofill
+   ============================================================ */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {

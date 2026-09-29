@@ -1,101 +1,686 @@
+/* ============================================================
+   Auth
+   Login / Registro / Éxito de registro
+
+   Dirección visual:
+   - superficies suaves
+   - glass contenido
+   - composición natural
+   - verde como acento
+   - decoración integrada
+   - responsive sin forzar la tarjeta a 100dvh
+   ============================================================ */
+
 .pantalla-auth {
+  --auth-fondo: var(--fondo);
+
+  --auth-superficie: rgba(255, 255, 255, 0.82);
+  --auth-borde: rgba(11, 30, 24, 0.08);
+  --auth-sombra:
+    0 28px 70px rgba(11, 30, 24, 0.1),
+    0 4px 18px rgba(11, 30, 24, 0.04);
+
+  --auth-input-fondo: rgba(246, 248, 247, 0.84);
+  --auth-input-borde: rgba(11, 30, 24, 0.08);
+  --auth-input-hover: rgba(255, 255, 255, 0.96);
+
+  --auth-acento: #0F7A5A;
+  --auth-acento-hover: #0B6147;
+  --auth-acento-texto: #FFFFFF;
+
+  --auth-ilustracion-fondo: rgba(15, 122, 90, 0.1);
+  --auth-ilustracion-hoja: #3f9b79;
+  --auth-ilustracion-hoja-secundaria: #68ad93;
+  --auth-ilustracion-hoja-detalle: #187457;
+  --auth-ilustracion-barra: #3c9878;
+  --auth-ilustracion-maceta: #238467;
+
   min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background: var(--fondo);
+
+  display: grid;
+  place-items: center;
+
+  padding: 2rem;
+
+  background: var(--auth-fondo);
 }
 
+
+/* ============================================================
+   Tarjeta principal
+   ============================================================ */
+
 .tarjeta-auth {
+  position: relative;
+
+  width: min(100%, 500px);
+
+  overflow: hidden;
+
+  border: 1px solid var(--auth-borde);
+  border-radius: 30px;
+
+  background: var(--auth-superficie);
+
+  box-shadow: var(--auth-sombra);
+
+  backdrop-filter: blur(30px) saturate(140%);
+  -webkit-backdrop-filter: blur(30px) saturate(140%);
+}
+
+
+/* Línea de luz extremadamente sutil en el borde superior.
+   Evita el aspecto de degradado decorativo. */
+
+.tarjeta-auth::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  border-radius: inherit;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+
+/* ============================================================
+   Ilustración
+   ============================================================ */
+
+.tarjeta-auth__ilustracion {
+  position: absolute;
+  z-index: 0;
+
+  top: -42px;
+  right: -38px;
+
+  width: 215px;
+  height: 215px;
+
+  pointer-events: none;
+
+  opacity: 0.9;
+}
+
+.tarjeta-auth__ilustracion svg {
+  display: block;
+
   width: 100%;
-  max-width: 400px;
-  background: var(--heroe-fondo);
-  color: var(--heroe-texto);
-  border-radius: var(--radio);
-  padding: 2.5rem 2rem;
+  height: 100%;
+}
+
+
+/* ============================================================
+   Contenido
+   ============================================================ */
+
+.tarjeta-auth__contenido {
+  position: relative;
+  z-index: 1;
+}
+
+.tarjeta-auth__encabezado {
+  position: relative;
+  z-index: 1;
+
+  padding: 2.25rem 2.25rem 1rem;
 }
 
 .tarjeta-auth__marca {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+
   gap: 0.5rem;
-  margin-bottom: 2rem;
-  color: var(--acento-sobre-oscuro);
+
+  margin-bottom: 2.15rem;
+
+  color: var(--texto);
+
+  font-size: 0.875rem;
   font-weight: 700;
-  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
 }
 
-.tarjeta-auth h2 {
-  color: var(--heroe-texto);
-  margin-bottom: 0.35rem;
+.tarjeta-auth__marca-icono {
+  display: grid;
+  place-items: center;
+
+  width: 22px;
+  height: 22px;
+
+  color: var(--auth-acento);
+}
+
+.tarjeta-auth__marca-icono svg {
+  display: block;
+
+  width: 22px;
+  height: 22px;
+}
+
+.tarjeta-auth__titulo {
+  max-width: 14ch;
+
+  margin: 0 0 0.65rem;
+
+  font-size: clamp(1.85rem, 4vw, 2.15rem);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
 }
 
 .tarjeta-auth__subtitulo {
-  color: var(--heroe-texto-secundario);
-  margin-bottom: 2rem;
-  font-size: 0.9375rem;
+  max-width: 31ch;
+
+  color: var(--texto-secundario);
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
 }
 
-.tarjeta-auth .campo {
+
+/* ============================================================
+   Cuerpo del formulario
+   ============================================================ */
+
+.tarjeta-auth__cuerpo {
+  position: relative;
+  z-index: 1;
+
+  padding: 1rem 2.25rem 2.25rem;
+}
+
+
+/* ============================================================
+   Campos
+   ============================================================ */
+
+.campo {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+
+  gap: 0.42rem;
+
   margin-bottom: 1rem;
 }
 
-.tarjeta-auth .campo label {
-  font-size: 0.8125rem;
+.campo label {
+  color: var(--texto-secundario);
+
+  font-size: 0.75rem;
   font-weight: 600;
-  color: var(--heroe-texto-secundario);
+  line-height: 1.35;
+  letter-spacing: -0.005em;
 }
 
-.tarjeta-auth .campo input {
-  background: rgba(244, 243, 236, 0.08);
-  color: var(--heroe-texto);
-  border: 1px solid rgba(244, 243, 236, 0.12);
+.campo__envoltorio {
+  position: relative;
+
+  display: flex;
+  align-items: center;
 }
 
-.tarjeta-auth .campo input:focus-visible {
-  border-color: var(--acento);
-  background: rgba(244, 243, 236, 0.12);
+.campo__icono {
+  position: absolute;
+  left: 0.95rem;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--texto-terciario);
+
+  pointer-events: none;
 }
 
-.tarjeta-auth button[type='submit'] {
+.campo__icono svg {
+  display: block;
+
+  width: 16px;
+  height: 16px;
+}
+
+.campo__input-con-icono {
+  padding-left: 2.7rem;
+}
+
+.campo__input-con-icono,
+.campo__envoltorio input {
+  min-height: 48px;
+
+  background: var(--auth-input-fondo);
+
+  border-color: var(--auth-input-borde);
+  border-radius: 15px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.campo__envoltorio:focus-within input {
+  background: var(--auth-input-hover);
+
+  border-color: color-mix(
+    in srgb,
+    var(--auth-acento) 45%,
+    transparent
+  );
+
+  box-shadow:
+    0 0 0 3px color-mix(
+      in srgb,
+      var(--auth-acento) 10%,
+      transparent
+    );
+}
+
+
+/* ============================================================
+   Mostrar contraseña
+   ============================================================ */
+
+.campo__boton-ojo {
+  position: absolute;
+  right: 0.35rem;
+
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  color: var(--texto-terciario);
+
+  background: transparent;
+  border: 0;
+  border-radius: 11px;
+
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+.campo__boton-ojo:hover {
+  color: var(--texto);
+
+  background: color-mix(
+    in srgb,
+    var(--texto) 5%,
+    transparent
+  );
+}
+
+.campo__boton-ojo:active {
+  transform: scale(0.94);
+}
+
+
+/* ============================================================
+   Botón principal
+   ============================================================ */
+
+button.principal.boton-principal-ancho {
   width: 100%;
-  padding: 0.9rem;
-  margin-top: 0.75rem;
-  font-size: 0.9375rem;
+  min-height: 48px;
+
+  margin-top: 0.7rem;
+  padding: 0.8rem 1.1rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.55rem;
+
+  color: var(--auth-acento-texto);
+  background: var(--auth-acento);
+
+  border: 0;
+  border-radius: 15px;
+
+  font-size: 0.9rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+
+  box-shadow:
+    0 7px 18px color-mix(
+      in srgb,
+      var(--auth-acento) 18%,
+      transparent
+    );
+
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
 }
+
+button.principal.boton-principal-ancho:hover:not(:disabled) {
+  background: var(--auth-acento-hover);
+
+  box-shadow:
+    0 9px 22px color-mix(
+      in srgb,
+      var(--auth-acento) 23%,
+      transparent
+    );
+}
+
+.boton-principal-ancho svg {
+  transition: transform 180ms ease;
+}
+
+.boton-principal-ancho:hover:not(:disabled) svg {
+  transform: translateX(3px);
+}
+
+.boton-principal-ancho:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+
+/* ============================================================
+   Pie
+   ============================================================ */
 
 .tarjeta-auth__pie {
-  margin-top: 1.5rem;
+  margin: 1.35rem 0 0;
+
   text-align: center;
-  font-size: 0.875rem;
-  color: var(--heroe-texto-secundario);
+
+  color: var(--texto-secundario);
+
+  font-size: 0.8rem;
+  line-height: 1.45;
 }
 
 .tarjeta-auth__pie a {
-  color: var(--acento-sobre-oscuro);
-  font-weight: 600;
+  color: var(--auth-acento);
+
+  font-weight: 650;
 }
 
 .tarjeta-auth__pie a:hover {
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
+
+/* ============================================================
+   Error
+   ============================================================ */
+
 .mensaje-error {
-  background: rgba(255, 107, 94, 0.15);
-  color: #FF9086;
-  border-radius: var(--radio-chico);
-  padding: 0.7rem 0.9rem;
-  font-size: 0.8125rem;
-  margin-bottom: 1rem;
-  animation: entrar 180ms var(--easing);
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.85rem;
+
+  color: var(--peligro);
+  background: var(--peligro-suave);
+
+  border: 1px solid color-mix(
+    in srgb,
+    var(--peligro) 12%,
+    transparent
+  );
+
+  border-radius: 13px;
+
+  font-size: 0.78rem;
+  line-height: 1.45;
+
+  animation: auth-error 180ms ease-out;
 }
+
+@keyframes auth-error {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ============================================================
+   Pantalla de éxito
+   ============================================================ */
+
+.pantalla-auth--exito {
+  background: var(--fondo);
+}
+
+.exito-registro {
+  width: min(100%, 390px);
+
+  padding: 2.5rem 2rem 2.25rem;
+
+  text-align: center;
+
+  background: var(--auth-superficie);
+
+  border: 1px solid var(--auth-borde);
+  border-radius: 28px;
+
+  box-shadow: var(--auth-sombra);
+
+  backdrop-filter: blur(28px) saturate(135%);
+  -webkit-backdrop-filter: blur(28px) saturate(135%);
+}
+
+.exito-registro__circulo {
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 1.35rem;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--auth-acento);
+  background: var(--acento-suave);
+
+  border-radius: 50%;
+}
+
+.exito-registro__titulo {
+  margin-bottom: 0.5rem;
+}
+
+.exito-registro__texto {
+  max-width: 30ch;
+
+  margin: 0 auto 1.8rem;
+
+  color: var(--texto-secundario);
+}
+
+.exito-registro button.principal {
+  width: 100%;
+  min-height: 48px;
+
+  color: var(--auth-acento-texto);
+  background: var(--auth-acento);
+}
+
+
+/* ============================================================
+   Modo oscuro
+   ============================================================ */
+
+[data-tema='oscuro'] .pantalla-auth,
+:root:not([data-tema]) .pantalla-auth {
+  --auth-superficie: rgba(20, 46, 38, 0.82);
+
+  --auth-borde: rgba(255, 255, 255, 0.09);
+
+  --auth-sombra:
+    0 32px 80px rgba(0, 0, 0, 0.42),
+    0 8px 24px rgba(0, 0, 0, 0.25);
+
+  --auth-input-fondo: rgba(6, 22, 16, 0.78);
+  --auth-input-borde: rgba(255, 255, 255, 0.075);
+  --auth-input-hover: rgba(8, 28, 21, 0.94);
+
+  --auth-acento: #1B8A68;
+  --auth-acento-hover: #239976;
+  --auth-acento-texto: #F5FAF7;
+
+  --auth-ilustracion-fondo: rgba(34, 197, 94, 0.13);
+  --auth-ilustracion-hoja: #2fa86b;
+  --auth-ilustracion-hoja-secundaria: #4dba83;
+  --auth-ilustracion-hoja-detalle: #70d49d;
+  --auth-ilustracion-barra: #39ad73;
+  --auth-ilustracion-maceta: #249461;
+}
+
+[data-tema='oscuro'] .pantalla-auth {
+  background: var(--fondo);
+}
+
+[data-tema='oscuro'] .tarjeta-auth::before {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-tema='oscuro'] .campo__envoltorio:focus-within input {
+  background: var(--auth-input-hover);
+}
+
+[data-tema='oscuro'] .tarjeta-auth__ilustracion {
+  opacity: 0.88;
+}
+
+
+/* ============================================================
+   Responsive móvil
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .pantalla-auth {
+    min-height: 100svh;
+
+    display: block;
+
+    padding: 1rem;
+  }
+
+  .tarjeta-auth {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 auto;
+
+    border-radius: 24px;
+  }
+
+  .tarjeta-auth__ilustracion {
+    top: -36px;
+    right: -46px;
+
+    width: 185px;
+    height: 185px;
+  }
+
+  .tarjeta-auth__encabezado {
+    padding: 1.65rem 1.35rem 0.9rem;
+  }
+
+  .tarjeta-auth__marca {
+    margin-bottom: 2rem;
+  }
+
+  .tarjeta-auth__titulo {
+    font-size: 1.85rem;
+  }
+
+  .tarjeta-auth__subtitulo {
+    font-size: 0.86rem;
+  }
+
+  .tarjeta-auth__cuerpo {
+    padding: 0.9rem 1.35rem 1.7rem;
+  }
+
+  .campo {
+    margin-bottom: 0.9rem;
+  }
+
+  .tarjeta-auth__pie {
+    margin-top: 1.15rem;
+  }
+
+  .exito-registro {
+    padding: 2.25rem 1.4rem 1.8rem;
+
+    border-radius: 24px;
+  }
+}
+
+
+/* ============================================================
+   Móviles pequeños
+   ============================================================ */
+
+@media (max-width: 380px) {
+  .pantalla-auth {
+    padding: 0.65rem;
+  }
+
+  .tarjeta-auth {
+    border-radius: 21px;
+  }
+
+  .tarjeta-auth__encabezado {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  .tarjeta-auth__cuerpo {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  .tarjeta-auth__titulo {
+    font-size: 1.7rem;
+  }
+}
+
+
+/* ============================================================
+   Accesibilidad
+   ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
   .mensaje-error {
     animation: none;
+  }
+
+  .boton-principal-ancho svg,
+  .campo__boton-ojo,
+  .boton-principal-ancho {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .tarjeta-auth,
+  .exito-registro {
+    background: var(--superficie);
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
