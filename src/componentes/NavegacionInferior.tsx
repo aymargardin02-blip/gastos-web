@@ -19,6 +19,16 @@ function IconoTransacciones() {
   )
 }
 
+function IconoCuentas() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+      <line x1="7" y1="15" x2="11" y2="15" />
+    </svg>
+  )
+}
+
 function IconoCategorias() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -30,8 +40,24 @@ function IconoCategorias() {
 
 const enlaces = [
   { ruta: '/', fin: true, etiqueta: 'Panel', Icono: IconoPanel },
-  { ruta: '/transacciones', fin: false, etiqueta: 'Transacciones', Icono: IconoTransacciones },
-  { ruta: '/categorias', fin: false, etiqueta: 'Categorías', Icono: IconoCategorias },
+  {
+    ruta: '/transacciones',
+    fin: false,
+    etiqueta: 'Transacciones',
+    Icono: IconoTransacciones,
+  },
+  {
+    ruta: '/cuentas',
+    fin: false,
+    etiqueta: 'Cuentas',
+    Icono: IconoCuentas,
+  },
+  {
+    ruta: '/categorias',
+    fin: false,
+    etiqueta: 'Categorías',
+    Icono: IconoCategorias,
+  },
 ]
 
 export default function NavegacionInferior() {
@@ -43,7 +69,9 @@ export default function NavegacionInferior() {
           to={ruta}
           end={fin}
           className={({ isActive }) =>
-            isActive ? 'navegacion-inferior__item activo' : 'navegacion-inferior__item'
+            isActive
+              ? 'navegacion-inferior__item activo'
+              : 'navegacion-inferior__item'
           }
         >
           <Icono />
