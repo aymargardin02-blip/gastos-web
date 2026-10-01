@@ -8,6 +8,7 @@ import Transacciones from './paginas/Transacciones'
 import NuevaTransaccion from './paginas/NuevaTransaccion'
 import EditarTransaccion from './paginas/EditarTransaccion'
 import Categorias from './paginas/Categorias'
+import Cuentas from './paginas/Cuentas'
 import NoEncontrado from './paginas/NoEncontrado'
 import DisenoProtegido from './componentes/DisenoProtegido'
 import { borrarToken, guardarToken, obtenerToken } from './api/sesion'
@@ -54,6 +55,7 @@ function App() {
           path="/transacciones/:id/editar"
           element={<EditarTransaccion />}
         />
+        <Route path="/cuentas" element={<Cuentas />} />
         <Route path="/categorias" element={<Categorias />} />
         <Route path="/login" element={<Navigate to="/" replace />} />
         <Route path="/registro" element={<Navigate to="/" replace />} />

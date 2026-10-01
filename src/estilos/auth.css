@@ -4,29 +4,24 @@
 
    Dirección visual:
    - superficies suaves
-   - glass contenido
+   - glass muy contenido
    - composición natural
    - verde como acento
    - decoración integrada
-   - responsive sin forzar la tarjeta a 100dvh
+   - responsive sin forzar 100dvh en la tarjeta
    ============================================================ */
 
 .pantalla-auth {
   --auth-fondo: var(--fondo);
-
-  --auth-superficie: rgba(255, 255, 255, 0.82);
+  --auth-superficie: rgba(255, 255, 255, 0.78);
   --auth-borde: rgba(11, 30, 24, 0.08);
   --auth-sombra:
-    0 28px 70px rgba(11, 30, 24, 0.1),
+    0 24px 70px rgba(11, 30, 24, 0.09),
     0 4px 18px rgba(11, 30, 24, 0.04);
 
   --auth-input-fondo: rgba(246, 248, 247, 0.84);
   --auth-input-borde: rgba(11, 30, 24, 0.08);
   --auth-input-hover: rgba(255, 255, 255, 0.96);
-
-  --auth-acento: #0F7A5A;
-  --auth-acento-hover: #0B6147;
-  --auth-acento-texto: #FFFFFF;
 
   --auth-ilustracion-fondo: rgba(15, 122, 90, 0.1);
   --auth-ilustracion-hoja: #3f9b79;
@@ -36,13 +31,16 @@
   --auth-ilustracion-maceta: #238467;
 
   min-height: 100dvh;
-
   display: grid;
   place-items: center;
-
   padding: 2rem;
-
-  background: var(--auth-fondo);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(255, 255, 255, 0.72),
+      transparent 42%
+    ),
+    var(--auth-fondo);
 }
 
 
@@ -52,38 +50,34 @@
 
 .tarjeta-auth {
   position: relative;
-
-  width: min(100%, 500px);
-
+  width: min(100%, 430px);
   overflow: hidden;
 
   border: 1px solid var(--auth-borde);
-  border-radius: 30px;
+  border-radius: 28px;
 
   background: var(--auth-superficie);
 
   box-shadow: var(--auth-sombra);
 
-  backdrop-filter: blur(30px) saturate(140%);
-  -webkit-backdrop-filter: blur(30px) saturate(140%);
+  backdrop-filter: blur(28px) saturate(135%);
+  -webkit-backdrop-filter: blur(28px) saturate(135%);
 }
-
-
-/* Línea de luz extremadamente sutil en el borde superior.
-   Evita el aspecto de degradado decorativo. */
 
 .tarjeta-auth::before {
   content: '';
-
   position: absolute;
   inset: 0;
-
   pointer-events: none;
 
-  border-radius: inherit;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.48),
+      transparent 34%
+    );
 
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  opacity: 0.8;
 }
 
 
@@ -108,7 +102,6 @@
 
 .tarjeta-auth__ilustracion svg {
   display: block;
-
   width: 100%;
   height: 100%;
 }
@@ -124,22 +117,17 @@
 }
 
 .tarjeta-auth__encabezado {
-  position: relative;
-  z-index: 1;
-
   padding: 2.25rem 2.25rem 1rem;
 }
 
 .tarjeta-auth__marca {
   display: inline-flex;
   align-items: center;
-
   gap: 0.5rem;
 
   margin-bottom: 2.15rem;
 
   color: var(--texto);
-
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -152,19 +140,17 @@
   width: 22px;
   height: 22px;
 
-  color: var(--auth-acento);
+  color: var(--acento);
 }
 
 .tarjeta-auth__marca-icono svg {
   display: block;
-
   width: 22px;
   height: 22px;
 }
 
 .tarjeta-auth__titulo {
   max-width: 14ch;
-
   margin: 0 0 0.65rem;
 
   font-size: clamp(1.85rem, 4vw, 2.15rem);
@@ -176,7 +162,6 @@
   max-width: 31ch;
 
   color: var(--texto-secundario);
-
   font-size: 0.9rem;
   line-height: 1.5;
   letter-spacing: -0.005em;
@@ -188,9 +173,6 @@
    ============================================================ */
 
 .tarjeta-auth__cuerpo {
-  position: relative;
-  z-index: 1;
-
   padding: 1rem 2.25rem 2.25rem;
 }
 
@@ -202,7 +184,6 @@
 .campo {
   display: flex;
   flex-direction: column;
-
   gap: 0.42rem;
 
   margin-bottom: 1rem;
@@ -238,7 +219,6 @@
 
 .campo__icono svg {
   display: block;
-
   width: 16px;
   height: 16px;
 }
@@ -267,19 +247,10 @@
 
 .campo__envoltorio:focus-within input {
   background: var(--auth-input-hover);
-
-  border-color: color-mix(
-    in srgb,
-    var(--auth-acento) 45%,
-    transparent
-  );
+  border-color: color-mix(in srgb, var(--acento) 45%, transparent);
 
   box-shadow:
-    0 0 0 3px color-mix(
-      in srgb,
-      var(--auth-acento) 10%,
-      transparent
-    );
+    0 0 0 3px color-mix(in srgb, var(--acento) 10%, transparent);
 }
 
 
@@ -312,7 +283,6 @@
 
 .campo__boton-ojo:hover {
   color: var(--texto);
-
   background: color-mix(
     in srgb,
     var(--texto) 5%,
@@ -326,10 +296,156 @@
 
 
 /* ============================================================
+   Consentimientos
+   ============================================================ */
+
+.consentimientos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  margin: 1.15rem 0 0.4rem;
+}
+
+.consentimiento {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  color: var(--texto-secundario);
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.5;
+
+  cursor: pointer;
+}
+
+.consentimiento input[type='checkbox'] {
+  flex: 0 0 18px;
+
+  width: 18px;
+  min-width: 18px;
+  max-width: 18px;
+
+  height: 18px;
+  min-height: 18px;
+  max-height: 18px;
+
+  margin: 1px 0 0;
+  padding: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid var(--auth-input-borde);
+  border-radius: 5px;
+
+  background: var(--auth-input-fondo);
+
+  box-shadow: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 120ms ease;
+}
+
+.consentimiento input[type='checkbox']:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--auth-acento) 45%,
+    transparent
+  );
+}
+
+.consentimiento input[type='checkbox']:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px
+    color-mix(
+      in srgb,
+      var(--auth-acento) 12%,
+      transparent
+    );
+}
+
+.consentimiento input[type='checkbox']:checked {
+  border-color: var(--auth-acento);
+  background: var(--auth-acento);
+
+  box-shadow:
+    0 2px 6px
+    color-mix(
+      in srgb,
+      var(--auth-acento) 16%,
+      transparent
+    );
+}
+
+.consentimiento input[type='checkbox']:checked::after {
+  content: '';
+
+  display: block;
+
+  width: 4px;
+  height: 8px;
+
+  margin: 2px auto 0;
+
+  border-right: 2px solid var(--auth-acento-texto);
+  border-bottom: 2px solid var(--auth-acento-texto);
+
+  transform: rotate(45deg);
+}
+
+.consentimiento span {
+  display: block;
+
+  flex: 1;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+}
+
+.consentimiento a {
+  color: var(--auth-acento);
+  font-weight: 650;
+
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.consentimiento a:hover {
+  text-decoration: underline;
+}
+
+.consentimiento a:focus-visible {
+  outline: 2px solid
+    color-mix(
+      in srgb,
+      var(--auth-acento) 55%,
+      transparent
+    );
+
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+
+/* ============================================================
    Botón principal
    ============================================================ */
 
-button.principal.boton-principal-ancho {
+.boton-principal-ancho {
   width: 100%;
   min-height: 48px;
 
@@ -339,11 +455,7 @@ button.principal.boton-principal-ancho {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   gap: 0.55rem;
-
-  color: var(--auth-acento-texto);
-  background: var(--auth-acento);
 
   border: 0;
   border-radius: 15px;
@@ -355,7 +467,7 @@ button.principal.boton-principal-ancho {
   box-shadow:
     0 7px 18px color-mix(
       in srgb,
-      var(--auth-acento) 18%,
+      var(--acento) 18%,
       transparent
     );
 
@@ -365,19 +477,17 @@ button.principal.boton-principal-ancho {
     transform 150ms ease;
 }
 
-button.principal.boton-principal-ancho:hover:not(:disabled) {
-  background: var(--auth-acento-hover);
+.boton-principal-ancho svg {
+  transition: transform 180ms ease;
+}
 
+.boton-principal-ancho:hover:not(:disabled) {
   box-shadow:
     0 9px 22px color-mix(
       in srgb,
-      var(--auth-acento) 23%,
+      var(--acento) 23%,
       transparent
     );
-}
-
-.boton-principal-ancho svg {
-  transition: transform 180ms ease;
 }
 
 .boton-principal-ancho:hover:not(:disabled) svg {
@@ -405,8 +515,7 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
 }
 
 .tarjeta-auth__pie a {
-  color: var(--auth-acento);
-
+  color: var(--acento);
   font-weight: 650;
 }
 
@@ -489,7 +598,7 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
   display: grid;
   place-items: center;
 
-  color: var(--auth-acento);
+  color: var(--acento);
   background: var(--acento-suave);
 
   border-radius: 50%;
@@ -510,9 +619,6 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
 .exito-registro button.principal {
   width: 100%;
   min-height: 48px;
-
-  color: var(--auth-acento-texto);
-  background: var(--auth-acento);
 }
 
 
@@ -522,21 +628,16 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
 
 [data-tema='oscuro'] .pantalla-auth,
 :root:not([data-tema]) .pantalla-auth {
-  --auth-superficie: rgba(20, 46, 38, 0.82);
-
-  --auth-borde: rgba(255, 255, 255, 0.09);
+  --auth-superficie: rgba(18, 32, 27, 0.78);
+  --auth-borde: rgba(255, 255, 255, 0.08);
 
   --auth-sombra:
-    0 32px 80px rgba(0, 0, 0, 0.42),
-    0 8px 24px rgba(0, 0, 0, 0.25);
+    0 28px 70px rgba(0, 0, 0, 0.34),
+    0 4px 18px rgba(0, 0, 0, 0.22);
 
-  --auth-input-fondo: rgba(6, 22, 16, 0.78);
+  --auth-input-fondo: rgba(6, 22, 16, 0.72);
   --auth-input-borde: rgba(255, 255, 255, 0.075);
-  --auth-input-hover: rgba(8, 28, 21, 0.94);
-
-  --auth-acento: #1B8A68;
-  --auth-acento-hover: #239976;
-  --auth-acento-texto: #F5FAF7;
+  --auth-input-hover: rgba(8, 28, 21, 0.92);
 
   --auth-ilustracion-fondo: rgba(34, 197, 94, 0.13);
   --auth-ilustracion-hoja: #2fa86b;
@@ -547,20 +648,26 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
 }
 
 [data-tema='oscuro'] .pantalla-auth {
-  background: var(--fondo);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(34, 197, 94, 0.055),
+      transparent 40%
+    ),
+    var(--fondo);
 }
 
 [data-tema='oscuro'] .tarjeta-auth::before {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 34%
+    );
 }
 
 [data-tema='oscuro'] .campo__envoltorio:focus-within input {
   background: var(--auth-input-hover);
-}
-
-[data-tema='oscuro'] .tarjeta-auth__ilustracion {
-  opacity: 0.88;
 }
 
 
@@ -618,13 +725,20 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
     margin-bottom: 0.9rem;
   }
 
+  .consentimientos {
+    margin-top: 1rem;
+  }
+
+  .consentimiento {
+    font-size: 0.75rem;
+  }
+
   .tarjeta-auth__pie {
     margin-top: 1.15rem;
   }
 
   .exito-registro {
     padding: 2.25rem 1.4rem 1.8rem;
-
     border-radius: 24px;
   }
 }
@@ -670,7 +784,8 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
 
   .boton-principal-ancho svg,
   .campo__boton-ojo,
-  .boton-principal-ancho {
+  .boton-principal-ancho,
+  .consentimiento input[type='checkbox'] {
     transition: none;
   }
 }
@@ -679,7 +794,6 @@ button.principal.boton-principal-ancho:hover:not(:disabled) {
   .tarjeta-auth,
   .exito-registro {
     background: var(--superficie);
-
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

@@ -9,9 +9,21 @@ export function login(email: string, contrasena: string) {
   })
 }
 
-export function registrar(nombre: string, email: string, contrasena: string) {
+export function registrar(
+  nombre: string,
+  email: string,
+  contrasena: string,
+  aceptaTerminos: boolean,
+  aceptaPrivacidad: boolean,
+) {
   return peticion<{ id: number }>('/auth/register', {
     method: 'POST',
-    body: JSON.stringify({ nombre, email, contrasena }),
+    body: JSON.stringify({
+      nombre,
+      email,
+      contrasena,
+      aceptaTerminos,
+      aceptaPrivacidad,
+    }),
   })
 }
