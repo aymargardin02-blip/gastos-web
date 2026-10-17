@@ -1,37 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
-import { listarCuentas } from '../api/cuentas'
+
+import { useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  archivarCuenta,
+  desarchivarCuenta,
+  listarCuentas,
+  type Cuenta,
+} from '../api/cuentas'
+import FormularioCuenta from '../componentes/FormularioCuenta'
 import '../estilos/cuentas.css'
 
 function IconoCartera() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6.5A2.5 2.5 0 0 1 4 18.5v-13Z" />
-      <path d="M4 6h14" />
-      <path d="M16 13h5" />
-      <circle cx="16" cy="13" r=".8" fill="currentColor" stroke="none" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="15" rx="3" />
+      <path d="M3 9h18M16 14h2" />
     </svg>
   )
 }
 
 function IconoEfectivo() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="6" width="18" height="12" rx="2" />
       <circle cx="12" cy="12" r="2.5" />
       <path d="M6 9.5v0M18 14.5v0" />
@@ -41,15 +31,7 @@ function IconoEfectivo() {
 
 function IconoBanco() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M3 9h18L12 4 3 9Z" />
       <path d="M5 10v7M9 10v7M15 10v7M19 10v7" />
       <path d="M3 19h18" />
@@ -59,15 +41,7 @@ function IconoBanco() {
 
 function IconoAhorro() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 10.5A7 7 0 0 1 18.5 9l1.5 1.5v6h-3" />
       <path d="M4 11v5a4 4 0 0 0 4 4h7a4 4 0 0 0 4-4" />
       <path d="M8 8V6h3l1.5 2" />
@@ -78,55 +52,27 @@ function IconoAhorro() {
 
 function IconoInversion() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M4 19V5" />
-      <path d="M4 19h16" />
-      <path d="m7 15 4-4 3 2 5-7" />
-      <path d="M15 6h4v4" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 19V5M4 19h16" />
+      <path d="m7 15 4-4 3 2 5-7M15 6h4v4" />
     </svg>
   )
 }
 
 function IconoTarjeta() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M3 10h18" />
-      <path d="M7 15h4" />
+      <path d="M3 10h18M7 15h4" />
     </svg>
   )
 }
 
 function IconoDeuda() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M6 3h9l3 3v15H6z" />
-      <path d="M14 3v4h4" />
-      <path d="M9 12h6M9 16h4" />
+      <path d="M14 3v4h4M9 12h6M9 16h4" />
     </svg>
   )
 }
@@ -140,32 +86,12 @@ function IconoCuenta({
 }) {
   const nombreNormalizado = nombre.toLowerCase()
 
-  if (comportamiento === 'TARJETA_CREDITO') {
-    return <IconoTarjeta />
-  }
-
-  if (comportamiento === 'DEUDA') {
-    return <IconoDeuda />
-  }
-
-  if (nombreNormalizado.includes('efectivo')) {
-    return <IconoEfectivo />
-  }
-
-  if (nombreNormalizado.includes('banco')) {
-    return <IconoBanco />
-  }
-
-  if (
-    nombreNormalizado.includes('ahorro') ||
-    nombreNormalizado.includes('ahorros')
-  ) {
-    return <IconoAhorro />
-  }
-
-  if (nombreNormalizado.includes('invers')) {
-    return <IconoInversion />
-  }
+  if (comportamiento === 'TARJETA_CREDITO') return <IconoTarjeta />
+  if (comportamiento === 'DEUDA') return <IconoDeuda />
+  if (nombreNormalizado.includes('efectivo')) return <IconoEfectivo />
+  if (nombreNormalizado.includes('banco')) return <IconoBanco />
+  if (nombreNormalizado.includes('ahorro')) return <IconoAhorro />
+  if (nombreNormalizado.includes('invers')) return <IconoInversion />
 
   return <IconoCartera />
 }
@@ -178,13 +104,66 @@ function formatearSaldo(valor: string) {
 }
 
 export default function Cuentas() {
-  const { data: cuentas, isPending, isError } = useQuery({
+  const queryClient = useQueryClient()
+  const [mostrandoFormulario, setMostrandoFormulario] = useState(false)
+  const [cuentaEditar, setCuentaEditar] = useState<Cuenta | undefined>()
+  const [errorAccion, setErrorAccion] = useState<string | null>(null)
+
+  const {
+    data: cuentas,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ['cuentas'],
-    queryFn: () => listarCuentas(),
+    queryFn: () => listarCuentas(true),
+  })
+
+  const cambiarArchivo = useMutation({
+    mutationFn: async (cuenta: Cuenta) => {
+      if (cuenta.archivada) {
+        return desarchivarCuenta(cuenta.id)
+      }
+
+      return archivarCuenta(cuenta.id)
+    },
+    onSuccess: async () => {
+      setErrorAccion(null)
+      await queryClient.invalidateQueries({ queryKey: ['cuentas'] })
+    },
+    onError: (error) => {
+      setErrorAccion(
+        error instanceof Error
+          ? error.message
+          : 'No pudimos cambiar el estado de la cuenta.',
+      )
+    },
   })
 
   const cuentasActivas = cuentas?.filter((cuenta) => !cuenta.archivada) ?? []
   const cuentasArchivadas = cuentas?.filter((cuenta) => cuenta.archivada) ?? []
+
+  function abrirEdicion(cuenta: Cuenta) {
+    setCuentaEditar(cuenta)
+    setMostrandoFormulario(true)
+    setErrorAccion(null)
+  }
+
+  function cerrarFormulario() {
+    setMostrandoFormulario(false)
+    setCuentaEditar(undefined)
+  }
+
+  function alternarArchivo(cuenta: Cuenta) {
+    const mensaje = cuenta.archivada
+      ? `¿Quieres restaurar la cuenta "${cuenta.nombre}"?`
+      : `¿Quieres archivar la cuenta "${cuenta.nombre}"?`
+
+    if (!window.confirm(mensaje)) return
+
+    setErrorAccion(null)
+    cambiarArchivo.mutate(cuenta)
+  }
 
   return (
     <section className="cuentas">
@@ -195,11 +174,37 @@ export default function Cuentas() {
           <p>Administra tus cuentas y mantén el control de tu dinero.</p>
         </div>
 
-        <button type="button" className="cuentas__boton-nueva">
-          <span aria-hidden="true">+</span>
-          Nueva cuenta
-        </button>
+        {!mostrandoFormulario && (
+          <button
+            type="button"
+            className="cuentas__boton-nueva"
+            onClick={() => {
+              setCuentaEditar(undefined)
+              setMostrandoFormulario(true)
+              setErrorAccion(null)
+            }}
+          >
+            <span aria-hidden="true">+</span>
+            Nueva cuenta
+          </button>
+        )}
       </div>
+
+      {mostrandoFormulario && (
+        <div className="cuentas__formulario">
+          <FormularioCuenta
+            key={cuentaEditar?.id ?? 'nueva'}
+            cuentaEditar={cuentaEditar}
+            alCancelar={cerrarFormulario}
+          />
+        </div>
+      )}
+
+      {errorAccion && (
+        <div className="cuentas__estado cuentas__estado--error" role="alert">
+          <p>{errorAccion}</p>
+        </div>
+      )}
 
       {isPending && (
         <div className="cuentas__estado">
@@ -208,8 +213,12 @@ export default function Cuentas() {
       )}
 
       {isError && (
-        <div className="cuentas__estado cuentas__estado--error">
-          <p>No pudimos cargar tus cuentas.</p>
+        <div className="cuentas__estado cuentas__estado--error" role="alert">
+          <p>
+            {error instanceof Error
+              ? error.message
+              : 'No pudimos cargar tus cuentas.'}
+          </p>
         </div>
       )}
 
@@ -244,30 +253,33 @@ export default function Cuentas() {
             {cuentas.length === 0 ? (
               <div className="cuentas__vacio">
                 <div className="cuentas__vacio-icono">
-                  <IconoCuenta
-                    nombre="cuenta"
-                    comportamiento="NORMAL"
-                  />
+                  <IconoCuenta nombre="cuenta" comportamiento="NORMAL" />
                 </div>
 
                 <h3>Aún no tienes cuentas</h3>
 
                 <p>
-                  Crea tu primera cuenta para comenzar a organizar tus
-                  finanzas.
+                  Crea tu primera cuenta para comenzar a organizar tus finanzas.
                 </p>
 
-                <button type="button" className="cuentas__boton-nueva">
-                  <span aria-hidden="true">+</span>
-                  Crear primera cuenta
-                </button>
+                {!mostrandoFormulario && (
+                  <button
+                    type="button"
+                    className="cuentas__boton-nueva"
+                    onClick={() => {
+                      setCuentaEditar(undefined)
+                      setMostrandoFormulario(true)
+                    }}
+                  >
+                    <span aria-hidden="true">+</span>
+                    Crear primera cuenta
+                  </button>
+                )}
               </div>
             ) : (
               cuentas.map((cuenta) => (
                 <article
-                  className={`cuenta-card${
-                    cuenta.archivada ? ' cuenta-card--archivada' : ''
-                  }`}
+                  className={`cuenta-card${cuenta.archivada ? ' cuenta-card--archivada' : ''}`}
                   key={cuenta.id}
                 >
                   <div className="cuenta-card__icono">
@@ -280,13 +292,8 @@ export default function Cuentas() {
                   <div className="cuenta-card__contenido">
                     <div className="cuenta-card__cabecera">
                       <h3>{cuenta.nombre}</h3>
-
                       <span
-                        className={`cuenta-card__estado${
-                          cuenta.archivada
-                            ? ' cuenta-card__estado--archivada'
-                            : ''
-                        }`}
+                        className={`cuenta-card__estado${cuenta.archivada ? ' cuenta-card__estado--archivada' : ''}`}
                       >
                         {cuenta.archivada ? 'Archivada' : 'Activa'}
                       </span>
@@ -297,8 +304,7 @@ export default function Cuentas() {
                       <span aria-hidden="true"> · </span>
                       {cuenta.tipoCuenta.comportamiento === 'NORMAL'
                         ? 'Normal'
-                        : cuenta.tipoCuenta.comportamiento ===
-                            'TARJETA_CREDITO'
+                        : cuenta.tipoCuenta.comportamiento === 'TARJETA_CREDITO'
                           ? 'Tarjeta de crédito'
                           : 'Deuda'}
                     </p>
@@ -306,19 +312,37 @@ export default function Cuentas() {
 
                   <div className="cuenta-card__saldo">
                     {cuenta.saldo !== undefined
-                      ? formatearSaldo(cuenta.saldo)
+                      ? `$${formatearSaldo(cuenta.saldo)}`
                       : '—'}
                   </div>
 
-                  <button
-                    type="button"
-                    className="cuenta-card__menu"
-                    aria-label={`Opciones de ${cuenta.nombre}`}
-                  >
-                    <span />
-                    <span />
-                    <span />
-                  </button>
+                  <div className="cuenta-card__acciones">
+                    <button
+                      type="button"
+                      className="cuenta-card__menu"
+                      aria-label={`Editar ${cuenta.nombre}`}
+                      title="Editar cuenta"
+                      disabled={cambiarArchivo.isPending}
+                      onClick={() => abrirEdicion(cuenta)}
+                    >
+                      <span />
+                      <span />
+                      <span />
+                    </button>
+
+                    <button
+                      type="button"
+                      className="cuenta-card__accion-archivo"
+                      disabled={cambiarArchivo.isPending}
+                      onClick={() => alternarArchivo(cuenta)}
+                    >
+                      {cambiarArchivo.isPending
+                        ? 'Procesando...'
+                        : cuenta.archivada
+                          ? 'Restaurar'
+                          : 'Archivar'}
+                    </button>
+                  </div>
                 </article>
               ))
             )}
@@ -328,3 +352,4 @@ export default function Cuentas() {
     </section>
   )
 }
+
